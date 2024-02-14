@@ -2,7 +2,7 @@ import ProjectsSidebar from "./assets/components/ProjectsSidebar";
 
 function App() {
   return (
-    <main>
+    <main className="h-srceen my-8">
       <ProjectsSidebar />
     </main>
   );
