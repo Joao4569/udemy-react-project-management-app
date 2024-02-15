@@ -4,7 +4,7 @@ import NoProjectSelected from "./assets/components/NoProjectSelected.jsx";
 import { useState } from "react";
 
 function App() {
-  const [projectState, setProjectState] = useState({
+  const [projectsState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
   });
@@ -18,35 +18,36 @@ function App() {
     });
   }
 
-  function handleAddProject (projectData) {
-    setProjectState(prevState => {
-
+  function handleAddProject(projectData) {
+    setProjectState((prevState) => {
+      const projectId = Math.random();
       const newProject = {
         ...projectData,
-        id: Math.random()
-      }
+        id: projectId,
+      };
 
       return {
         ...prevState,
-        projects: [...prevState.projects, newProject]
-      }
+        selectedProjectId: undefined,
+        projects: [...prevState.projects, newProject],
+      };
     });
   }
 
-  console.log(projectState);
-
   let content;
 
-  if (projectState.selectedProjectId === null) {
+  if (projectsState.selectedProjectId === null) {
     content = <NewProject onAdd={handleAddProject} />;
-  } else if (projectState.selectedProjectId === undefined) {
+  } else if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
-
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+      <ProjectsSidebar
+        onStartAddProject={handleStartAddProject}
+        projects={projectsState.projects}
+      />
       {content}
     </main>
   );
